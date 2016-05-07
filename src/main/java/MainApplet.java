@@ -23,22 +23,32 @@ public class MainApplet extends PApplet{
 	JSONObject data;
 	JSONArray nodes, links;
 	private ArrayList<Character> characters;
+	private Network nt;
+	private String series = "Star Wars 1";;
 	
-
 	private final static int width = 1200, height = 650;
-	
 	
 	public void setup() {
 
 		size(width, height);
 		smooth();
 		characters = new ArrayList<Character>();
+		nt = new Network(this);
 		loadData();	
 		
 	}
 
 	public void draw() {
 		background(255);
+		
+		//顯示第N部曲
+		fill(0);
+		textSize(30);
+		text(series,500,80);
+		//畫出中間網路部分。
+		nt.display();
+		//畫出左邊圓點
+		//當有滑鼠上有物件時，則選取的圓圈最後display
 		if(hasObject()){
 			for(Character c : characters){
 				if(!c.equals(this.objectOnMouse)){
@@ -51,6 +61,8 @@ public class MainApplet extends PApplet{
 			for(Character c : characters)
 				c.display();
 		}
+		
+
 				
 			
 		}
@@ -60,30 +72,37 @@ public class MainApplet extends PApplet{
 	    switch(keyCode) { 
 	        case 49:
 	        	file = "main/resources/starwars-episode-1-interactions.json";
+	        	series = "Star Wars 1";
 	        	setup();
 	            break;
 	        case 50:
 	        	file = "main/resources/starwars-episode-2-interactions.json";
+	        	series = "Star Wars 2";
 	        	setup();
 	            break;
 	        case 51:
 	        	file = "main/resources/starwars-episode-3-interactions.json";
+	        	series = "Star Wars 3";
 	        	setup();
 	            break;
 	        case 52 :
 	        	file = "main/resources/starwars-episode-4-interactions.json";
+	        	series = "Star Wars 4";
 	        	setup();
 	        	break;
 	        case 53 :
 	        	file = "main/resources/starwars-episode-5-interactions.json";
+	        	series = "Star Wars 5";
 	        	setup();
 	        	break;
 	        case 54 :
 	        	file = "main/resources/starwars-episode-6-interactions.json";
+	        	series = "Star Wars 6";
 	        	setup();
 	            break;
 	        case 55 :
 	        	file = "main/resources/starwars-episode-7-interactions.json";
+	        	series = "Star Wars 7";
 	        	setup();
 	            break;
 	        default :
@@ -99,7 +118,7 @@ public class MainApplet extends PApplet{
 			JSONObject job = nodes.getJSONObject(i);
 			String name = job.getString("name");
 			String color = job.getString("colour");
-			this.characters.add(new Character(this, name, 20 + (i/10) * (height/11), 20 + (i%10) * (height/11), color));
+			this.characters.add(new Character(this, name, 50 + (i/10) * (height/11), 50 + (i%10) * (height/11), color));
 
 		}
 		
@@ -133,5 +152,9 @@ public class MainApplet extends PApplet{
 	
 	public void setObjectOnMouse(Character c){
 		this.objectOnMouse = c;
-		}	
+		}
+	
+	public Network getNetwork(){
+		return this.nt;
+	}
 	}

@@ -11,15 +11,33 @@ import processing.core.PApplet;
 public class Network {
 	
 	private PApplet parent;
+	private int radius=200;
+	private int x,y;
 
 	public Network(PApplet parent){
 
 		this.parent = parent;
-		
+		x=600;
+		y=335;
 	}
 
 	public void display(){
+		parent.fill(255);
+		parent.stroke(125);
+		parent.strokeWeight(4);
+		parent.ellipse(x, y, radius*2, radius*2);
+	}
 		
+	public int getRadius(){
+		return this.radius;
+	}
+	
+	public int getX(){
+		return this.x;
+	}
+	
+	public int getY(){
+		return this.y;
 	}
 	
 }
