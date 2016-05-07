@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+<<<<<<< HEAD
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="C:/Users/1041107/Downloads/軟實/Libraries/Processing/core.jar"/>
+=======
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="C:/Users/Master/Documents/SoftwareStudioAssignment6/lib/Ani.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Master/Documents/SoftwareStudioAssignment6/lib/controlP5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Master/Documents/SoftwareStudioAssignment6/lib/core.jar"/>
+>>>>>>> 70fdb75f65477624ce06e345f571f09de081d7af
 	<classpathentry kind="output" path="bin"/>
 </classpath>
