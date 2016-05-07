@@ -13,6 +13,7 @@ import de.looksgood.ani.Ani;
 public class Character {
 
 	private int x,y;
+	private int tmpX,tmpY;
 	private int radius=20;
 	private String name;
 	private int value;
@@ -31,6 +32,8 @@ public class Character {
 		this.name = name;
 		this.x = x;
 		this.y = y;
+		tmpX = x;
+		tmpY = y;
 		this.value = value;
 		this.color = color;
 		aniSetup();
@@ -51,9 +54,9 @@ public class Character {
 		parent.fill(255);
 		//畫出角色圓球
 		parent.stroke(0);
-		parent.ellipse(x, y, radius*2, radius*2);
+		parent.ellipse(tmpX, tmpY, radius*2, radius*2);
 		
-		distance = PApplet.dist(parent.mouseX, parent.mouseY, x, y);
+		distance = PApplet.dist(parent.mouseX, parent.mouseY, tmpX, tmpY);
 		//distance = Math.sqrt(Math.pow((parent.mouseX-x), 2) + Math.pow((parent.mouseY-y), 2));
 		//判斷游標是否在圓球內
 		if(distance<radius){
@@ -67,9 +70,10 @@ public class Character {
 				ani.start();
 				//角色名字
 				parent.fill(255,128,192);
-				parent.stroke(255,128,192);
+				parent.stroke(255,128,192);				
 				parent.rect(parent.mouseX,parent.mouseY-15 ,30 + 8*name.length(),30,7);
 				parent.fill(255);
+				parent.textSize(14);
 				parent.text(name, parent.mouseX+15, parent.mouseY+5);
 			}
 		}				
@@ -77,21 +81,26 @@ public class Character {
 	}
 	
 	public void start(){
-		System.out.println("in");
+		System.out.println("in");		
 			}
 	public void end(){
 		System.out.println("out");
 		parent.setHasObject(false);
 		parent.setObjectOnMouse(null);
+		float distance = PApplet.dist(parent.mouseX, parent.mouseY, parent.getNetwork().getX(), parent.getNetwork().getY());
+		if(distance > parent.getNetwork().getRadius()){
+				Ani.to(this,(float)0.2,"tmpX",x, Ani.LINEAR);
+				Ani.to(this, (float)0.2, "tmpY", y,Ani.LINEAR);
+		}
 		}
 	
 	
 	public void setX(int x){
-		this.x = x;
+		this.tmpX = x;
 	}	
 	
 	public void setY(int y){
-		this.y = y;
+		this.tmpY = y;
 	}
 	
 	public ArrayList<Character> getTargets(){
