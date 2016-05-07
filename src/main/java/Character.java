@@ -23,16 +23,14 @@ public class Character {
 	private ArrayList<Character> targets;
 	private HashMap values;
 
-	public Character(MainApplet parent, String name, int value, String color){
-	}
-	
-	public Character(MainApplet parent, String name, float x, float y, String color){
+	public Character(MainApplet parent, String name, int x, int y, String color){
 
 		targets = new ArrayList<Character>();
 		values = new HashMap();
 		this.parent = parent;
 		this.name = name;
-
+		this.x = x;
+		this.y = y;
 		this.value = value;
 		this.color = color;
 		aniSetup();
@@ -46,24 +44,20 @@ public class Character {
 		ani.setCallback("onEnd:end");		
 	}
 	
-	public String getName(){
-		return this.name;
-	}
-
 	public void display(){
 		double distance=0;
 		//填入顏色
-		int hi = parent.unhex(color);
-		parent.fill(hi);
+		//int hi = PApplet.unhex(PApplet.hex(color.to));
+		parent.fill(255);
 		//畫出角色圓球
-		parent.stroke(hi);
+		parent.stroke(0);
 		parent.ellipse(x, y, radius*2, radius*2);
 		
 		distance = PApplet.dist(parent.mouseX, parent.mouseY, x, y);
 		//distance = Math.sqrt(Math.pow((parent.mouseX-x), 2) + Math.pow((parent.mouseY-y), 2));
 		//判斷游標是否在圓球內
 		if(distance<radius){
-			//若鼠標在圓球內且鼠標上沒有物件，設定為有物件，並指定為此圓球。
+			//若鼠標在圓球內且鼠標上沒有物件，設定為有物件，並指定物件為此圓球。
 			if(!parent.hasObject()){
 				parent.setHasObject(true);
 				parent.setObjectOnMouse(this);
@@ -75,6 +69,8 @@ public class Character {
 				parent.fill(255,128,192);
 				parent.stroke(255,128,192);
 				parent.rect(parent.mouseX,parent.mouseY-15 , 60,30,7);
+				parent.fill(255);
+				parent.text(name, x, y);
 			}
 		}				
 		
@@ -92,9 +88,8 @@ public class Character {
 	
 	public void setX(int x){
 		this.x = x;
-	}
+	}	
 	
-
 	public void setY(int y){
 		this.y = y;
 	}
