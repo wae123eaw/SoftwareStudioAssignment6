@@ -39,8 +39,20 @@ public class MainApplet extends PApplet{
 
 	public void draw() {
 		background(255);
-		for(Character c : characters)
-			c.display();
+		if(hasObject()){
+			for(Character c : characters){
+				if(!c.equals(this.objectOnMouse)){
+					c.display();
+				}
+				}
+			this.objectOnMouse.display();
+			}
+		else{
+			for(Character c : characters)
+				c.display();
+		}
+				
+			
 		}
 	
 	public void keyPressed(KeyEvent e) {

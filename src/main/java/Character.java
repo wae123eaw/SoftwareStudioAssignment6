@@ -68,9 +68,9 @@ public class Character {
 				//角色名字
 				parent.fill(255,128,192);
 				parent.stroke(255,128,192);
-				parent.rect(parent.mouseX,parent.mouseY-15 , 60,30,7);
+				parent.rect(parent.mouseX,parent.mouseY-15 ,30 + 8*name.length(),30,7);
 				parent.fill(255);
-				parent.text(name, x, y);
+				parent.text(name, parent.mouseX+15, parent.mouseY+5);
 			}
 		}				
 		
