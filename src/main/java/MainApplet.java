@@ -32,7 +32,7 @@ public class MainApplet extends PApplet{
 	}
 
 	public void draw() {
-
+		background(0);
 	}
 	
 	public void keyPressed(KeyEvent e) {
