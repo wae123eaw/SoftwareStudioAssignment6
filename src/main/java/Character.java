@@ -1,8 +1,13 @@
 package main.java;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
 
 import de.looksgood.ani.Ani;
+=======
+import java.util.HashMap;
+
+>>>>>>> 3b0a95df2d6222bee7b0d5b9efc6802d2e38f4ca
 import processing.core.PApplet;
 
 /**
@@ -19,16 +24,33 @@ public class Character {
 
 	private Ani ani;
 	private MainApplet parent;
+	public float x, y;
+	private String name;
+	private String color;
+	private ArrayList<Character> targets;
+	private HashMap values;
 
+<<<<<<< HEAD
 	public Character(MainApplet parent, String name, int value, String color){
+=======
+	public Character(MainApplet parent, String name, float x, float y, String color){
+>>>>>>> 3b0a95df2d6222bee7b0d5b9efc6802d2e38f4ca
 
+		targets = new ArrayList<Character>();
+		values = new HashMap();
 		this.parent = parent;
 		this.name = name;
+<<<<<<< HEAD
 		this.value = value;
 		this.color = color;
 		aniSetup();
 	
 	}
+=======
+		this.x = x;
+		this.y = y;
+		this.color = color;
+>>>>>>> 3b0a95df2d6222bee7b0d5b9efc6802d2e38f4ca
 		
 	public void aniSetup(){
 		Ani.init(parent);
@@ -37,6 +59,13 @@ public class Character {
 		ani.setCallback("onEnd:end");		
 	}
 	
+<<<<<<< HEAD
+=======
+	public String getName(){
+		return this.name;
+	}
+
+>>>>>>> 3b0a95df2d6222bee7b0d5b9efc6802d2e38f4ca
 	public void display(){
 		double distance=0;
 		//int hi = parent.unhex(color);
@@ -78,10 +107,26 @@ public class Character {
 		this.x = x;
 	}
 	
+<<<<<<< HEAD
 	public void setY(int y){
 		this.y = y;
 	}
 	
 	
+=======
+	public ArrayList<Character> getTargets(){
+		return this.targets;
+	}
+	
+	public HashMap getValues(){
+		return this.values;
+	}
+	
+	
+	public void addTarget(Character target, int value) {
+		this.targets.add(target);
+		this.values.put(target, value);
+	}
+>>>>>>> 3b0a95df2d6222bee7b0d5b9efc6802d2e38f4ca
 	
 }
