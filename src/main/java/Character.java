@@ -27,7 +27,7 @@ public class Character {
 		this.color = color;
 		aniSetup();
 	}
-	
+		
 	public void aniSetup(){
 		Ani.init(parent);
 		ani = new Ani(this,(float) 0.3,"radius",15,Ani.LINEAR);
@@ -37,10 +37,10 @@ public class Character {
 	public void display(){
 		double distance=0;
 		parent.ellipse(x, y, radius*2, radius*2);
-		distance = Math.sqrt(Math.pow((parent.mouseX-x), 2) + Math.pow((parent.mouseY-y), 2));
+		distance = Math.sqrt(Math.pow((parent.mouseX-x), 2) + Math.pow((parent.mouseY-x), 2));
 		if(distance<=radius){
 			ani.start();
-			parent.setHasObject(true);
+			System.out.println("test");
 		}		
 		
 	}

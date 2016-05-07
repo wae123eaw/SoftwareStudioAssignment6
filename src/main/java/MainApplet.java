@@ -35,7 +35,12 @@ public class MainApplet extends PApplet{
 		c.setX(30);
 		c.setY(30);
 	}
-
+	
+	public void mouseDragged(){
+		c.setX(mouseX);
+		c.setY(mouseY);
+	}
+	
 	public void setHasObject(boolean b){
 		this.hasObject = b;
 	}
