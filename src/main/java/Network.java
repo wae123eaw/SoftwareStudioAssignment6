@@ -81,10 +81,11 @@ public class Network {
 	}
 	
 	public void removeAll(){
-		for(Character c : characters)
-			c.fly();
-		characters.clear();
-		
+		for(Character c : characters){
+			c.setInNetwork(false);
+			c.fly();		
+		}
+		characters.clear();		
 	}
 	
 	public ArrayList<Character> getNetworkCh(){

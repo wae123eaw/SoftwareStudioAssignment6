@@ -55,6 +55,13 @@ public class MainApplet extends PApplet{
 		
 		//畫出中間網路部分。
 		nt.display();
+		
+
+		for(Character c: episode.get(theChosenOne)){
+			c.ntDisplay();
+		}
+
+		
 		//畫出網路圖		
 		//畫出左邊圓點
 		//當滑鼠上有物件時，則選取的圓圈最後display
@@ -72,10 +79,6 @@ public class MainApplet extends PApplet{
 			}
 		}
 		
-		for(Character c: episode.get(theChosenOne)){
-			c.ntDisplay();
-		}
-
 		}
 	
 	public void initButton(){
@@ -134,7 +137,8 @@ public class MainApplet extends PApplet{
 	        default :
 	        	break;
 	     }
-	} 
+	    nt.removeAll();
+   	} 
 	
 	private void loadData(){	
 		
@@ -147,8 +151,9 @@ public class MainApplet extends PApplet{
 			for(int i = 0; i < nodes.size(); i++){				
 				JSONObject job = nodes.getJSONObject(i);
 				String name = job.getString("name");
+				int value = job.getInt("value");
 				String color = job.getString("colour");				
-				episode.get(j).add(new Character(this, name, 50 + (i/10) * (height/11), 50 + (i%10) * (height/11), color));
+				episode.get(j).add(new Character(this, name, 50 + (i/10) * (height/11), 50 + (i%10) * (height/11),value, color));
 				}		
 			links = data.getJSONArray("links");
 			for(int i = 0; i < links.size(); i++){
@@ -213,9 +218,10 @@ public class MainApplet extends PApplet{
 	}
 	public void clearButton(){
 		System.out.println("clear");
-		for(Character c: episode.get(theChosenOne)){
+		/*for(Character c: episode.get(theChosenOne)){
 			c.setInNetwork(false);
 		}
+		*/
 		nt.removeAll();
 	}
 	}

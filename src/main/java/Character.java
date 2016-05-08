@@ -19,12 +19,13 @@ public class Character {
 	private int value;
 	private String color;
 	private boolean inNetwork;
+	private int maxValue;
 
 	private Ani ani;
 	private MainApplet parent;
 	private HashMap<Character,Integer> targets;
 
-	public Character(MainApplet parent, String name, float x, float y, String color){
+	public Character(MainApplet parent, String name, float x, float y, int value, String color){
 
 		targets = new HashMap<Character, Integer>();		
 		
@@ -34,11 +35,16 @@ public class Character {
 		this.y = y;
 		this.tmpX = x;
 		this.tmpY = y;
-		this.value = value;
+		this.value = value;		
+		this.maxValue = 0;
 		this.color = "FF" + color.substring(1);
 		this.inNetwork = false;
-			
+					
 		aniSetup();
+		
+		for(int tmp: targets.values().toArray(new Integer[targets.size()])){
+			maxValue = tmp > maxValue? tmp : maxValue;
+		}
 		
 		}
 	//Ani的初始化
@@ -84,19 +90,27 @@ public class Character {
 							
 	}
 	//network display function
-	public void ntDisplay(){
+	public void ntDisplay(){		
 		if(inNetwork){
-			Network ntTmp = parent.getNetwork();
-			for(Character c : ntTmp.getNetworkCh()){
+			Network ntTmp = parent.getNetwork();			
+			
+			for(int i=0;i< ntTmp.getNetworkCh().size();i++){
+				Character c = ntTmp.getNetworkCh().get(i);
 				if(targets.containsKey(c)){					
-					parent.stroke(100);
-					parent.strokeWeight(targets.get(c));
+					parent.stroke(128,21,21);
+					parent.strokeWeight(4 + 2*(int)(Math.log(targets.get(c))));
 					parent.noFill();
-					parent.bezier(this.tmpX, this.tmpY
-							,(-0.4f*ntTmp.getX() + this.tmpX), (-0.4f*ntTmp.getY() + this.tmpY)
-							,(-0.4f*ntTmp.getX() + c.tmpX), (-0.4f*ntTmp.getY() + c.tmpY)
+					parent.curve((2f* (this.tmpX -ntTmp.getX()) + this.tmpX), (2f * (this.tmpY - ntTmp.getY()) + this.tmpY)
+							,this.tmpX, this.tmpY
 							,c.tmpX, c.tmpY
+							,(2f*(c.tmpX - ntTmp.getX()) + c.tmpX), (2f*(c.tmpY - ntTmp.getY()) + c.tmpY)
 							);
+					/*
+					 * To see the bend point 
+					 * parent.strokeWeight(2);
+					 * parent.ellipse((2* (this.tmpX -ntTmp.getX()) + this.tmpX), (2f * (this.tmpY - ntTmp.getY()) + this.tmpY), 20, 20);
+					 * parent.ellipse((2*(c.tmpX - ntTmp.getX()) + c.tmpX), (2f*(c.tmpY - ntTmp.getY()) + c.tmpY), 20, 20);
+					*/
 					}					
 			}
 		}
