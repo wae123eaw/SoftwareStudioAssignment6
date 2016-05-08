@@ -67,12 +67,16 @@ public class Network {
 	}
 	
 	public void add(Character c){
-		characters.add(c);
+		if(!characters.contains(c)){
+			characters.add(c);			
+		}
 		reArrange();
 	}
 	
 	public void remove(Character c){
+		if(characters.contains(c)){
 		characters.remove(c);
+		}
 		reArrange();
 	}
 }

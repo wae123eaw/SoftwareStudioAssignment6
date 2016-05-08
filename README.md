@@ -4,17 +4,16 @@
 + You will have to import the libraries on your own. All the libraries are provided on iLMS.
 + Even you followed the design TA shown in the video, you still have to explain the control of the program in the next section.
 
-## Explanation of the Design
-Explain your design in this section.  
-Example:
-### Operation
-+ Clicking on the button "Add All": users can add all the characters into network to be analyzed.
-+ Clicking on the button "Clear": users can remove all the characters from network.
-+ Hovering on the character: the name of the character will be revealed.
-+ By dragging the little circle and drop it in the big circle, the character will be added to the network.
-+ By pressing key 1~7 on the keyboard, users can switch between episodes.
-+ ...etc.
+## Explanation of the Design  
 
-### Visualization
+### 操作
++ Add All按鈕可以將此影集的所有角色加入中間的network中
++ Clear按鈕可以移除目前在network中的角色
++ 當滑鼠游標移到角色圓圈上時，會顯示角色名字。
++ 滑鼠可以隨意拖曳一個角色。當滑鼠放開地點在network圓圈內，則會將此角色加入到network中。
++ 按下鍵盤1~7可以選擇影集(右方或上方都可以)
+
+
+### 視覺
 + The width of each link is visualized based on the value of the link.
-+ ...etc.
+

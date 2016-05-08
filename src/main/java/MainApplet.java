@@ -67,37 +67,44 @@ public class MainApplet extends PApplet{
 	
 	public void keyPressed(KeyEvent e) {
 	    int keyCode = e.getKeyCode();
-	    switch(keyCode) { 
+	    switch(keyCode) {
+	    	case 97:	
 	        case 49:
 	        	file = "main/resources/starwars-episode-1-interactions.json";
 	        	series = "Star Wars 1";
 	        	setup();
 	            break;
+	        case 98:
 	        case 50:
 	        	file = "main/resources/starwars-episode-2-interactions.json";
 	        	series = "Star Wars 2";
 	        	setup();
 	            break;
+	        case 99:
 	        case 51:
 	        	file = "main/resources/starwars-episode-3-interactions.json";
 	        	series = "Star Wars 3";
 	        	setup();
 	            break;
+	        case 100:
 	        case 52 :
 	        	file = "main/resources/starwars-episode-4-interactions.json";
 	        	series = "Star Wars 4";
 	        	setup();
 	        	break;
+	        case 101:
 	        case 53 :
 	        	file = "main/resources/starwars-episode-5-interactions.json";
 	        	series = "Star Wars 5";
 	        	setup();
 	        	break;
+	        case 102:
 	        case 54 :
 	        	file = "main/resources/starwars-episode-6-interactions.json";
 	        	series = "Star Wars 6";
 	        	setup();
 	            break;
+	        case 103:
 	        case 55 :
 	        	file = "main/resources/starwars-episode-7-interactions.json";
 	        	series = "Star Wars 7";
