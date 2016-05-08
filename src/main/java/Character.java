@@ -12,8 +12,8 @@ import de.looksgood.ani.Ani;
 */
 public class Character {
 
-	private int x,y;
-	private int tmpX,tmpY;
+	private float x,y;
+	private float tmpX,tmpY;
 	private int radius=20;
 	private String name;
 	private int value;
@@ -24,27 +24,24 @@ public class Character {
 	private ArrayList<Character> targets;
 	private HashMap values;
 
-	public Character(MainApplet parent, String name, int x, int y, String color){
+	public Character(MainApplet parent, String name, float x, float y, String color){
 
 		targets = new ArrayList<Character>();
 		values = new HashMap();
+		
 		this.parent = parent;
 		this.name = name;
 		this.x = x;
 		this.y = y;
-<<<<<<< HEAD
 		this.tmpX = x;
 		this.tmpY = y;
-=======
-		tmpX = x;
-		tmpY = y;
->>>>>>> 72493895dc77129feb2598fd4ec68f127009fa16
 		this.value = value;
 		this.color = "FF" + color.substring(1);
+		
 		aniSetup();
 		
 		}
-		
+	//Ani的初始化
 	public void aniSetup(){
 		Ani.init(parent);
 		ani = new Ani(this,(float) 0.3,"radius",15,Ani.LINEAR);
@@ -58,12 +55,8 @@ public class Character {
 		int hi = PApplet.unhex(color);		
 		parent.fill(hi);
 		//畫出角色圓球
-<<<<<<< HEAD
 		parent.stroke(hi);
 		parent.strokeWeight(4);
-=======
-		parent.stroke(0);
->>>>>>> 72493895dc77129feb2598fd4ec68f127009fa16
 		parent.ellipse(tmpX, tmpY, radius*2, radius*2);
 		
 		distance = PApplet.dist(parent.mouseX, parent.mouseY, tmpX, tmpY);
@@ -96,19 +89,11 @@ public class Character {
 	public void end(){
 		parent.setHasObject(false);
 		parent.setObjectOnMouse(null);
-<<<<<<< HEAD
-		System.out.println("out");		
 		
 		Ani.to(this,(float)0.2,"radius",15, Ani.LINEAR);		
-		
-=======
-		float distance = PApplet.dist(parent.mouseX, parent.mouseY, parent.getNetwork().getX(), parent.getNetwork().getY());
-		if(distance > parent.getNetwork().getRadius()){
-				Ani.to(this,(float)0.2,"tmpX",x, Ani.LINEAR);
-				Ani.to(this, (float)0.2, "tmpY", y,Ani.LINEAR);
+
 		}
->>>>>>> 72493895dc77129feb2598fd4ec68f127009fa16
-		}
+	//讓圓球飛回原始位置
 	public void fly(){		
 		parent.setHasObject(false);
 		parent.setObjectOnMouse(null);
@@ -118,11 +103,11 @@ public class Character {
 	}
 	
 	
-	public void setX(int x){
+	public void setX(float x){
 		this.tmpX = x;
 	}	
 	
-	public void setY(int y){
+	public void setY(float y){
 		this.tmpY = y;
 	}
 	

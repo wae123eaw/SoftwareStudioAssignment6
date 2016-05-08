@@ -32,9 +32,9 @@ public class MainApplet extends PApplet{
 	public void setup() {
 
 		size(width, height);
-		smooth();
-		characters = new ArrayList<Character>();
+		smooth();		
 		nt = new Network(this);
+		characters = new ArrayList<Character>();		
 		loadData();	
 		
 	}
@@ -62,14 +62,7 @@ public class MainApplet extends PApplet{
 			for(Character c : characters)
 				c.display();
 		}
-		
-<<<<<<< HEAD
-							
-=======
 
-				
-			
->>>>>>> 72493895dc77129feb2598fd4ec68f127009fa16
 		}
 	
 	public void keyPressed(KeyEvent e) {
@@ -115,7 +108,7 @@ public class MainApplet extends PApplet{
 	     }
 	} 
 
-	private void loadData(){
+	private synchronized void loadData(){
 
 		data = loadJSONObject(file);
 		nodes = data.getJSONArray("nodes");
@@ -138,6 +131,7 @@ public class MainApplet extends PApplet{
 			}
 	}
 	
+	//當滑鼠拖曳時，判斷是否有物件。當有物件時，則設定該物件的X，Y座標。
 	public void mouseDragged(){
 		if(hasObject()){
 			this.objectOnMouse.setX(mouseX);
@@ -145,32 +139,36 @@ public class MainApplet extends PApplet{
 		}
 	}
 	
+	//當滑鼠鍵放開時，判斷是否有物件。當有物件時，判斷是否在network圓圈中。若不是在圓圈中，則使用Character中的fly()方法飛回原處。
 	public void mouseReleased(){
 		if(hasObject()){
 			if(dist(mouseX,mouseY,nt.getX(),nt.getY()) > nt.getRadius()){
 				System.out.print("true");
+				nt.remove(getObjectOnMouse());
 				getObjectOnMouse().fly();
 			}
-		}
-		
+			else{
+				nt.add(getObjectOnMouse());
+			}
+		}		
 	}
-	
+	//hasObject getter
 	public boolean hasObject(){
 		return this.hasObject;
 	}
-	
+	//hasObject setter
 	public void setHasObject(boolean b){
 		this.hasObject = b;
 	}
-	
+	//objectOnMouse getter
 	public Character getObjectOnMouse(){
 		return this.objectOnMouse;
 	}
-	
+	//objectOnMouse setter
 	public void setObjectOnMouse(Character c){
 		this.objectOnMouse = c;
 		}
-	
+	//nt getter
 	public Network getNetwork(){
 		return this.nt;
 	}
