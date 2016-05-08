@@ -10,7 +10,11 @@ import processing.core.PApplet;
 */
 public class Network {
 	
+<<<<<<< HEAD
 	private MainApplet parent;
+=======
+	private PApplet parent;
+>>>>>>> 72493895dc77129feb2598fd4ec68f127009fa16
 	private int radius=200;
 	private int x,y;
 
@@ -22,6 +26,7 @@ public class Network {
 	}
 
 	public void display(){
+<<<<<<< HEAD
 		float distance = PApplet.dist(x,y,parent.mouseX,parent.mouseY);
 		
 		if(parent.hasObject() && distance < radius){
@@ -35,6 +40,12 @@ public class Network {
 		
 		parent.ellipse(x, y, radius*2, radius*2);
 				
+=======
+		parent.fill(255);
+		parent.stroke(125);
+		parent.strokeWeight(4);
+		parent.ellipse(x, y, radius*2, radius*2);
+>>>>>>> 72493895dc77129feb2598fd4ec68f127009fa16
 	}
 		
 	public int getRadius(){

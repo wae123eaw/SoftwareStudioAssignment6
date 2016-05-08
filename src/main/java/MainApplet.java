@@ -63,7 +63,13 @@ public class MainApplet extends PApplet{
 				c.display();
 		}
 		
+<<<<<<< HEAD
 							
+=======
+
+				
+			
+>>>>>>> 72493895dc77129feb2598fd4ec68f127009fa16
 		}
 	
 	public void keyPressed(KeyEvent e) {

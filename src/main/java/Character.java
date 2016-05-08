@@ -32,8 +32,13 @@ public class Character {
 		this.name = name;
 		this.x = x;
 		this.y = y;
+<<<<<<< HEAD
 		this.tmpX = x;
 		this.tmpY = y;
+=======
+		tmpX = x;
+		tmpY = y;
+>>>>>>> 72493895dc77129feb2598fd4ec68f127009fa16
 		this.value = value;
 		this.color = "FF" + color.substring(1);
 		aniSetup();
@@ -53,8 +58,12 @@ public class Character {
 		int hi = PApplet.unhex(color);		
 		parent.fill(hi);
 		//畫出角色圓球
+<<<<<<< HEAD
 		parent.stroke(hi);
 		parent.strokeWeight(4);
+=======
+		parent.stroke(0);
+>>>>>>> 72493895dc77129feb2598fd4ec68f127009fa16
 		parent.ellipse(tmpX, tmpY, radius*2, radius*2);
 		
 		distance = PApplet.dist(parent.mouseX, parent.mouseY, tmpX, tmpY);
@@ -87,10 +96,18 @@ public class Character {
 	public void end(){
 		parent.setHasObject(false);
 		parent.setObjectOnMouse(null);
+<<<<<<< HEAD
 		System.out.println("out");		
 		
 		Ani.to(this,(float)0.2,"radius",15, Ani.LINEAR);		
 		
+=======
+		float distance = PApplet.dist(parent.mouseX, parent.mouseY, parent.getNetwork().getX(), parent.getNetwork().getY());
+		if(distance > parent.getNetwork().getRadius()){
+				Ani.to(this,(float)0.2,"tmpX",x, Ani.LINEAR);
+				Ani.to(this, (float)0.2, "tmpY", y,Ani.LINEAR);
+		}
+>>>>>>> 72493895dc77129feb2598fd4ec68f127009fa16
 		}
 	public void fly(){		
 		parent.setHasObject(false);
