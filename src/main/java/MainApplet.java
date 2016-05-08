@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 
 import java.util.ArrayList;
 
+import de.looksgood.ani.Ani;
 import processing.core.PApplet;
 import processing.data.JSONArray;
 import processing.data.JSONObject;
@@ -62,9 +63,7 @@ public class MainApplet extends PApplet{
 				c.display();
 		}
 		
-
-				
-			
+							
 		}
 	
 	public void keyPressed(KeyEvent e) {
@@ -134,8 +133,20 @@ public class MainApplet extends PApplet{
 	}
 	
 	public void mouseDragged(){
-		this.objectOnMouse.setX(mouseX);
-		this.objectOnMouse.setY(mouseY);
+		if(hasObject()){
+			this.objectOnMouse.setX(mouseX);
+			this.objectOnMouse.setY(mouseY);
+		}
+	}
+	
+	public void mouseReleased(){
+		if(hasObject()){
+			if(dist(mouseX,mouseY,nt.getX(),nt.getY()) > nt.getRadius()){
+				System.out.print("true");
+				getObjectOnMouse().fly();
+			}
+		}
+		
 	}
 	
 	public boolean hasObject(){

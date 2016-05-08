@@ -32,10 +32,10 @@ public class Character {
 		this.name = name;
 		this.x = x;
 		this.y = y;
-		tmpX = x;
-		tmpY = y;
+		this.tmpX = x;
+		this.tmpY = y;
 		this.value = value;
-		this.color = color;
+		this.color = "FF" + color.substring(1);
 		aniSetup();
 		
 		}
@@ -49,11 +49,12 @@ public class Character {
 	
 	public void display(){
 		double distance=0;
-		//填入顏色
-		//int hi = PApplet.unhex(PApplet.hex(color.to));
-		parent.fill(255);
+		//填入顏色				
+		int hi = PApplet.unhex(color);		
+		parent.fill(hi);
 		//畫出角色圓球
-		parent.stroke(0);
+		parent.stroke(hi);
+		parent.strokeWeight(4);
 		parent.ellipse(tmpX, tmpY, radius*2, radius*2);
 		
 		distance = PApplet.dist(parent.mouseX, parent.mouseY, tmpX, tmpY);
@@ -84,15 +85,20 @@ public class Character {
 		System.out.println("in");		
 			}
 	public void end(){
-		System.out.println("out");
 		parent.setHasObject(false);
 		parent.setObjectOnMouse(null);
-		float distance = PApplet.dist(parent.mouseX, parent.mouseY, parent.getNetwork().getX(), parent.getNetwork().getY());
-		if(distance > parent.getNetwork().getRadius()){
-				Ani.to(this,(float)0.2,"tmpX",x, Ani.LINEAR);
-				Ani.to(this, (float)0.2, "tmpY", y,Ani.LINEAR);
+		System.out.println("out");		
+		
+		Ani.to(this,(float)0.2,"radius",15, Ani.LINEAR);		
+		
 		}
-		}
+	public void fly(){		
+		parent.setHasObject(false);
+		parent.setObjectOnMouse(null);
+		
+		Ani.to(this,(float)0.2,"tmpX",x, Ani.LINEAR);
+		Ani.to(this, (float)0.2, "tmpY", y,Ani.LINEAR);
+	}
 	
 	
 	public void setX(int x){
