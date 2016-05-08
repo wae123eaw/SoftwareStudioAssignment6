@@ -25,7 +25,8 @@ public class MainApplet extends PApplet{
 	private String file = "main/resources/starwars-episode-1-interactions.json";
 	JSONObject data;
 	JSONArray nodes, links;
-	private ArrayList<Character> characters = new ArrayList<Character>();;
+	private ArrayList<ArrayList<Character>> episode = new ArrayList<ArrayList<Character>>();	
+	private int theChosenOne;
 	private Network nt;
 	private String series = "Star Wars 1";
 	
@@ -34,11 +35,11 @@ public class MainApplet extends PApplet{
 	private final static int width = 1200, height = 650;
 	
 	public void setup() {
-		
-		characters.clear();
+			
 		size(width, height);
 		smooth();		
 		initButton();
+		theChosenOne = 0;
 		nt = new Network(this);		
 		loadData();	
 		
@@ -58,7 +59,7 @@ public class MainApplet extends PApplet{
 		//畫出左邊圓點
 		//當滑鼠上有物件時，則選取的圓圈最後display
 		if(hasObject()){
-			for(Character c : characters){
+			for(Character c : episode.get(theChosenOne)){
 				if(!c.equals(this.objectOnMouse)){					
 					c.display();
 				}
@@ -66,12 +67,12 @@ public class MainApplet extends PApplet{
 			this.objectOnMouse.display();
 			}
 		else{
-			for(Character c : characters){				
+			for(Character c : episode.get(theChosenOne)){				
 				c.display();
 			}
 		}
 		
-		for(Character c: characters){
+		for(Character c: episode.get(theChosenOne)){
 			c.ntDisplay();
 		}
 
@@ -96,72 +97,67 @@ public class MainApplet extends PApplet{
 	    int keyCode = e.getKeyCode();
 	    switch(keyCode) {
 	    	case 97:	
-	        case 49:
-	        	file = "main/resources/starwars-episode-1-interactions.json";
-	        	series = "Star Wars 1";
-	        	setup();
+	        case 49:	        	
+	        	series = "Star Wars 1";	        	
+	        	theChosenOne = 0;
 	            break;
 	        case 98:
-	        case 50:
-	        	file = "main/resources/starwars-episode-2-interactions.json";
-	        	series = "Star Wars 2";
-	        	setup();
+	        case 50:	        	
+	        	series = "Star Wars 2";	        	
+	        	theChosenOne = 1;
 	            break;
 	        case 99:
-	        case 51:
-	        	file = "main/resources/starwars-episode-3-interactions.json";
-	        	series = "Star Wars 3";
-	        	setup();
+	        case 51:	        	
+	        	series = "Star Wars 3";	        	
+	        	theChosenOne = 2;
 	            break;
 	        case 100:
-	        case 52 :
-	        	file = "main/resources/starwars-episode-4-interactions.json";
-	        	series = "Star Wars 4";
-	        	setup();
+	        case 52 :	        	
+	        	series = "Star Wars 4";	        	
+	        	theChosenOne = 3;
 	        	break;
 	        case 101:
-	        case 53 :
-	        	file = "main/resources/starwars-episode-5-interactions.json";
-	        	series = "Star Wars 5";
-	        	setup();
+	        case 53 :	        	
+	        	series = "Star Wars 5";	        	
+	        	theChosenOne = 4;
 	        	break;
 	        case 102:
-	        case 54 :
-	        	file = "main/resources/starwars-episode-6-interactions.json";
+	        case 54 :	        	
 	        	series = "Star Wars 6";
-	        	setup();
+	        	theChosenOne = 5;
 	            break;
 	        case 103:
-	        case 55 :
-	        	file = "main/resources/starwars-episode-7-interactions.json";
-	        	series = "Star Wars 7";
-	        	setup();
+	        case 55 :	        	
+	        	series = "Star Wars 7";	        	
+	        	theChosenOne = 6;
 	            break;
 	        default :
 	        	break;
 	     }
 	} 
 	
-	private void loadData(){
-
-		data = loadJSONObject(file);
-		nodes = data.getJSONArray("nodes");
-		for(int i = 0; i < nodes.size(); i++){
-			JSONObject job = nodes.getJSONObject(i);
-			String name = job.getString("name");
-			String color = job.getString("colour");
-			this.characters.add(new Character(this, name, 50 + (i/10) * (height/11), 50 + (i%10) * (height/11), color));
-
-		}
+	private void loadData(){	
 		
-		data = loadJSONObject(file);
-		links = data.getJSONArray("links");
-		for(int i = 0; i < links.size(); i++){
-			JSONObject job = links.getJSONObject(i);
-			int s = job.getInt("source");
-			int t = job.getInt("target");
-			int v = job.getInt("value");
-			this.characters.get(s).addTarget(this.characters.get(t), v);
+		for(int j=0;j<7;j++){
+			file = ("main/resources/starwars-episode-" + (j+1) + "-interactions.json");
+			
+			data = loadJSONObject(file);
+			nodes = data.getJSONArray("nodes");
+			episode.add(new ArrayList<Character>());
+			for(int i = 0; i < nodes.size(); i++){				
+				JSONObject job = nodes.getJSONObject(i);
+				String name = job.getString("name");
+				String color = job.getString("colour");				
+				episode.get(j).add(new Character(this, name, 50 + (i/10) * (height/11), 50 + (i%10) * (height/11), color));
+				}		
+			links = data.getJSONArray("links");
+			for(int i = 0; i < links.size(); i++){
+				JSONObject job = links.getJSONObject(i);
+				int s = job.getInt("source");
+				int t = job.getInt("target");
+				int v = job.getInt("value");
+				episode.get(j).get(s).addTarget(episode.get(j).get(t), v);
+				}		
 			}
 	}
 	
@@ -182,7 +178,7 @@ public class MainApplet extends PApplet{
 				getObjectOnMouse().setInNetwork(false);
 				getObjectOnMouse().fly();
 			}
-			else{
+			else{				
 				nt.add(getObjectOnMouse());
 				getObjectOnMouse().setInNetwork(true);
 			}
@@ -210,14 +206,14 @@ public class MainApplet extends PApplet{
 	}
 	
 	public void addButton(){
-		for(Character c: characters){
+		for(Character c: episode.get(theChosenOne)){
 			nt.add(c);
 			c.setInNetwork(true);
 		}
 	}
 	public void clearButton(){
 		System.out.println("clear");
-		for(Character c: characters){
+		for(Character c: episode.get(theChosenOne)){
 			c.setInNetwork(false);
 		}
 		nt.removeAll();
