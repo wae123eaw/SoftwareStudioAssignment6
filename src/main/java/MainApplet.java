@@ -4,10 +4,12 @@ import java.awt.event.KeyEvent;
 
 import java.util.ArrayList;
 
+import controlP5.ControlP5;
 import de.looksgood.ani.Ani;
 import processing.core.PApplet;
 import processing.data.JSONArray;
 import processing.data.JSONObject;
+
 
 /**
 * This class is for sketching outcome using Processing
@@ -23,47 +25,72 @@ public class MainApplet extends PApplet{
 	private String file = "main/resources/starwars-episode-1-interactions.json";
 	JSONObject data;
 	JSONArray nodes, links;
-	private ArrayList<Character> characters;
+	private ArrayList<Character> characters = new ArrayList<Character>();;
 	private Network nt;
-	private String series = "Star Wars 1";;
+	private String series = "Star Wars 1";
+	
+	private ControlP5 cp5;
 	
 	private final static int width = 1200, height = 650;
 	
 	public void setup() {
-
+		
+		characters.clear();
 		size(width, height);
 		smooth();		
-		nt = new Network(this);
-		characters = new ArrayList<Character>();		
+		initButton();
+		nt = new Network(this);		
 		loadData();	
 		
 	}
 
 	public void draw() {
-		background(255);
-		
+		background(255);		
 		//顯示第N部曲
 		fill(0);
 		textSize(30);
-		text(series,500,80);
+		text(series,525,80);
+		//顯示button
+		
 		//畫出中間網路部分。
 		nt.display();
+		//畫出網路圖		
 		//畫出左邊圓點
-		//當有滑鼠上有物件時，則選取的圓圈最後display
+		//當滑鼠上有物件時，則選取的圓圈最後display
 		if(hasObject()){
 			for(Character c : characters){
-				if(!c.equals(this.objectOnMouse)){
+				if(!c.equals(this.objectOnMouse)){					
 					c.display();
 				}
 				}
 			this.objectOnMouse.display();
 			}
 		else{
-			for(Character c : characters)
+			for(Character c : characters){				
 				c.display();
+			}
+		}
+		
+		for(Character c: characters){
+			c.ntDisplay();
 		}
 
 		}
+	
+	public void initButton(){
+		cp5 = new ControlP5(this);
+		cp5.addButton("addButton")
+		.setLabel("Add All")
+		.setPosition(900,150)
+		.setSize(100,30);
+		
+		cp5.addButton("clearButton")
+		.setLabel("clear All")
+		.setPosition(900,200)
+		.setSize(100,30);
+		
+		
+	}
 	
 	public void keyPressed(KeyEvent e) {
 	    int keyCode = e.getKeyCode();
@@ -114,8 +141,8 @@ public class MainApplet extends PApplet{
 	        	break;
 	     }
 	} 
-
-	private synchronized void loadData(){
+	
+	private void loadData(){
 
 		data = loadJSONObject(file);
 		nodes = data.getJSONArray("nodes");
@@ -152,10 +179,12 @@ public class MainApplet extends PApplet{
 			if(dist(mouseX,mouseY,nt.getX(),nt.getY()) > nt.getRadius()){
 				System.out.print("true");
 				nt.remove(getObjectOnMouse());
+				getObjectOnMouse().setInNetwork(false);
 				getObjectOnMouse().fly();
 			}
 			else{
 				nt.add(getObjectOnMouse());
+				getObjectOnMouse().setInNetwork(true);
 			}
 		}		
 	}
@@ -178,5 +207,19 @@ public class MainApplet extends PApplet{
 	//nt getter
 	public Network getNetwork(){
 		return this.nt;
+	}
+	
+	public void addButton(){
+		for(Character c: characters){
+			nt.add(c);
+			c.setInNetwork(true);
+		}
+	}
+	public void clearButton(){
+		System.out.println("clear");
+		for(Character c: characters){
+			c.setInNetwork(false);
+		}
+		nt.removeAll();
 	}
 	}

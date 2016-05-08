@@ -18,16 +18,15 @@ public class Character {
 	private String name;
 	private int value;
 	private String color;
+	private boolean inNetwork;
 
 	private Ani ani;
 	private MainApplet parent;
-	private ArrayList<Character> targets;
-	private HashMap values;
+	private HashMap<Character,Integer> targets;
 
 	public Character(MainApplet parent, String name, float x, float y, String color){
 
-		targets = new ArrayList<Character>();
-		values = new HashMap();
+		targets = new HashMap<Character, Integer>();		
 		
 		this.parent = parent;
 		this.name = name;
@@ -37,7 +36,8 @@ public class Character {
 		this.tmpY = y;
 		this.value = value;
 		this.color = "FF" + color.substring(1);
-		
+		this.inNetwork = false;
+			
 		aniSetup();
 		
 		}
@@ -51,6 +51,7 @@ public class Character {
 	
 	public void display(){
 		double distance=0;
+				
 		//填入顏色				
 		int hi = PApplet.unhex(color);		
 		parent.fill(hi);
@@ -61,7 +62,7 @@ public class Character {
 		
 		distance = PApplet.dist(parent.mouseX, parent.mouseY, tmpX, tmpY);
 		//distance = Math.sqrt(Math.pow((parent.mouseX-x), 2) + Math.pow((parent.mouseY-y), 2));
-		//判斷游標是否在圓球內
+		//判斷游標是否在圓球內				
 		if(distance<radius){
 			//若鼠標在圓球內且鼠標上沒有物件，設定為有物件，並指定物件為此圓球。
 			if(!parent.hasObject()){
@@ -79,13 +80,34 @@ public class Character {
 				parent.textSize(14);
 				parent.text(name, parent.mouseX+15, parent.mouseY+5);
 			}
-		}				
-		
+		}
+							
+	}
+	//network display function
+	public void ntDisplay(){
+		if(inNetwork){
+			Network ntTmp = parent.getNetwork();
+			for(Character c : ntTmp.getNetworkCh()){
+				if(targets.containsKey(c)){					
+					parent.stroke(100);
+					parent.strokeWeight(targets.get(c));
+					parent.noFill();
+					parent.bezier(this.tmpX, this.tmpY
+							,(-0.4f*ntTmp.getX() + this.tmpX), (-0.4f*ntTmp.getY() + this.tmpY)
+							,(-0.4f*ntTmp.getX() + c.tmpX), (-0.4f*ntTmp.getY() + c.tmpY)
+							,c.tmpX, c.tmpY
+							);
+					}					
+			}
+		}
 	}
 	
+	
+	//Ani start control
 	public void start(){
 		System.out.println("in");		
 			}
+	//Ani end control
 	public void end(){
 		parent.setHasObject(false);
 		parent.setObjectOnMouse(null);
@@ -106,22 +128,20 @@ public class Character {
 	public void setX(float x){
 		this.tmpX = x;
 	}	
-	
+		
 	public void setY(float y){
 		this.tmpY = y;
 	}
 	
-	public ArrayList<Character> getTargets(){
+	public HashMap<Character, Integer> getTargets(){
 		return this.targets;
 	}
 	
-	public HashMap getValues(){
-		return this.values;
-	}
-	
 	public void addTarget(Character target, int value) {
-		this.targets.add(target);
-		this.values.put(target, value);
-	}
+		this.targets.put(target, value);
+		}
 	
+	public void setInNetwork(boolean b){
+		this.inNetwork = b;
+	}
 }

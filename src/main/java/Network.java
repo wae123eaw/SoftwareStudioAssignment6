@@ -32,7 +32,7 @@ public class Network {
 		float distance = PApplet.dist(x,y,parent.mouseX,parent.mouseY);
 		
 		if(parent.hasObject() && distance < radius){
-			parent.strokeWeight(6);			
+			parent.strokeWeight(8);			
 		}
 		else{		
 			parent.strokeWeight(4);		
@@ -40,8 +40,8 @@ public class Network {
 		parent.stroke(173,217,231);
 		parent.fill(255);
 		
-		parent.ellipse(x, y, radius*2, radius*2);				
-
+		parent.ellipse(x, y, radius*2, radius*2);	
+			
 	}
 	
 	private void reArrange(){
@@ -77,6 +77,17 @@ public class Network {
 		if(characters.contains(c)){
 		characters.remove(c);
 		}
-		reArrange();
+		reArrange();		
+	}
+	
+	public void removeAll(){
+		for(Character c : characters)
+			c.fly();
+		characters.clear();
+		
+	}
+	
+	public ArrayList<Character> getNetworkCh(){
+		return characters;
 	}
 }
