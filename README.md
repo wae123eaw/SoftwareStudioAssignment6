@@ -124,14 +124,14 @@ Getter:
 + getNetworkCh(): ArrayList<Character>
 
 ##實作中遇到的問題
-+runtime執行時有遇到ConcurrentModificationException的問題。
-+上網大致查詢一下，個人對這個錯誤誘發的理解是：
-+iterator在讀取資料時會檢查資料的數量。
-+如果其他thread有動到原始資料，改變其資料數量的話，iterator在進行下次讀取時會發現資料數量不一致，而丟出那個錯誤。
-+而大部分網路上查到的狀況是在remove的時候會誘發錯誤。
-+但我們一開始遇到這個問題是在讀取時產生的。
-+最初的設計是只利用一個ArrayList去讀取JASON檔。讀取資料是在鍵盤紐按下後，開一個新的arrayList，將資料讀進來。這個設計下，在做快速的影集切換時，會誘發問題。
-+後來利用7個ArrayList來存資料，有改善前面的問題。
-+後續測試中，點擊Add All 並且切換影集時，又會誘發該錯誤。
-+因此嘗試將character中ntDisplay讀取資料的方法(原本是利用enhanced loop)，修改為利用for(int i;i<characters.size();i++)方式來讀取。問題好像就沒了。
-+不清楚這樣的解決方式對不對。目前為止測試是沒有問題的。
++ runtime執行時有遇到ConcurrentModificationException的問題。
++ 上網大致查詢一下，個人對這個錯誤誘發的理解是：
++ iterator在讀取資料時會檢查資料的數量。
++ 如果其他thread有動到原始資料，改變其資料數量的話，iterator在進行下次讀取時會發現資料數量不一致，而丟出那個錯誤。
++ 而大部分網路上查到的狀況是在remove的時候會誘發錯誤。
++ 但我們一開始遇到這個問題是在讀取時產生的。
++ 最初的設計是只利用一個ArrayList去讀取JASON檔。讀取資料是在鍵盤紐按下後，開一個新的arrayList，將資料讀進來。這個設計下，在做快速的影集切換時，會誘發問題。
++ 後來利用7個ArrayList來存資料，有改善前面的問題。
++ 後續測試中，點擊Add All 並且切換影集時，又會誘發該錯誤。
++ 因此嘗試將character中ntDisplay讀取資料的方法(原本是利用enhanced loop)，修改為利用for(int i;i<characters.size();i++)方式來讀取。問題好像就沒了。
++ 不清楚這樣的解決方式對不對。目前為止測試是沒有問題的。
