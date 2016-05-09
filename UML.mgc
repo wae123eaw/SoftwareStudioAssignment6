@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClassDiagram>
+    <Class name="main.java.MainApplet" x="425" y="108">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="main.java.Network"
+            endpointName="nt" kind="Simple"/>
+        <Association destinationClassName="main.java.Character"
+            endpointName="objectOnMouse" kind="Simple"/>
+        <Communication destinationClassName="main.java.Network"/>
+        <Communication destinationClassName="main.java.Character"/>
+    </Class>
+    <Class name="main.java.Network" x="257" y="480">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="main.java.Character"
+            endpointName="characters" kind="Simple"/>
+        <Association destinationClassName="main.java.MainApplet"
+            endpointName="parent" kind="Simple"/>
+        <Communication destinationClassName="main.java.MainApplet"/>
+        <Communication destinationClassName="main.java.Character"/>
+    </Class>
+    <Class name="main.java.Character" x="28" y="112">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="main.java.MainApplet"
+            endpointName="parent" kind="Simple"/>
+        <Communication destinationClassName="main.java.MainApplet"/>
+    </Class>
+</ClassDiagram>

@@ -18,7 +18,7 @@ public class Network {
 	//網路的半徑
 	private int radius=200;
 	//圓的中心座標
-	private int x,y;
+	private float x,y;
 
 	public Network(MainApplet parent){
 
@@ -64,11 +64,11 @@ public class Network {
 		return this.radius;
 	}
 	//取得X座標方法
-	public int getX(){
+	public float getX(){
 		return this.x;
 	}
 	//取得Y座標方法
-	public int getY(){
+	public float getY(){
 		return this.y;
 	}
 	//加入角色方法，呼叫後加入該角色到網路中，並且呼叫reArrange方法

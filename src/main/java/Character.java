@@ -143,10 +143,9 @@ public class Character {
 			}
 	//Ani end control
 	public void end(){
+		System.out.println("out");
 		parent.setHasObject(false);
-		parent.setObjectOnMouse(null);
-		
-		Ani.to(this,(float)0.2,"radius",15, Ani.LINEAR);		
+		parent.setObjectOnMouse(null);		
 
 		}
 	//讓圓球飛回原始位置
@@ -156,6 +155,14 @@ public class Character {
 		
 		Ani.to(this,(float)0.2,"tmpX",x, Ani.LINEAR);
 		Ani.to(this, (float)0.2, "tmpY", y,Ani.LINEAR);
+	}
+	
+	public void addTarget(Character target, int value) {
+		this.targets.put(target, value);
+		}
+	
+	public void setInNetwork(boolean b){
+		this.inNetwork = b;
 	}
 	
 	//設定角色X座標方法
@@ -171,11 +178,5 @@ public class Character {
 		return this.targets;
 	}
 	
-	public void addTarget(Character target, int value) {
-		this.targets.put(target, value);
-		}
 	
-	public void setInNetwork(boolean b){
-		this.inNetwork = b;
-	}
 }
