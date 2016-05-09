@@ -133,5 +133,5 @@ iterator在讀取資料時會檢查資料的數量。
 最初的設計是只利用一個ArrayList去讀取JASON檔。讀取資料是在鍵盤紐按下後，開一個新的arrayList，將資料讀進來。這個設計下，在做快速的影集切換時，會誘發問題。
 後來利用7個ArrayList來存資料，有改善前面的問題。
 後續測試中，點擊Add All 並且切換影集時，又會誘發該錯誤。
-因此嘗試將character中ntDisplay讀取資料的方法(原本是利用enhanced loop)，修改為利用for(int i;i<characters.size();i++)方式來讀取。問題好像就沒了。
-不清楚這樣的解決方式對不對。目前為止測試是沒有問題的。
+因此嘗試將character中ntDisplay讀取資料的方法(原本是利用enhanced loop)，修改為利用for(int i;i<characters.size();i++)方式來讀取，問題就解決了。
+不過，不清楚這樣的解決方式對不對，截至目前為止測試是沒有問題的。
