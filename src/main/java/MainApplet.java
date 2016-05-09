@@ -17,15 +17,17 @@ import processing.data.JSONObject;
 */
 @SuppressWarnings("serial")
 public class MainApplet extends PApplet{
-
+	
+	//用來判斷游標上有沒有角色
 	private boolean hasObject;
+	//儲存在游標上的角色
 	private Character objectOnMouse;
 	
-	//private String path = "";
 	private String file = "main/resources/starwars-episode-1-interactions.json";
 	JSONObject data;
 	JSONArray nodes, links;
-	private ArrayList<ArrayList<Character>> episode = new ArrayList<ArrayList<Character>>();	
+	private ArrayList<ArrayList<Character>> episode = new ArrayList<ArrayList<Character>>();
+	//決定影集
 	private int theChosenOne;
 	private Network nt;
 	private String series = "Star Wars 1";
@@ -34,6 +36,7 @@ public class MainApplet extends PApplet{
 	
 	private final static int width = 1200, height = 650;
 	
+	//設定視窗大小，初始化按鈕，設定影集，讀取資料
 	public void setup() {
 			
 		size(width, height);
@@ -51,15 +54,25 @@ public class MainApplet extends PApplet{
 		fill(0);
 		textSize(30);
 		text(series,525,80);
-		//顯示button
 		
 		//畫出中間網路部分。
 		nt.display();
 		
-
-		for(Character c: episode.get(theChosenOne)){
-			c.ntDisplay();
+		//印出網路圖。在網路中游標移到任何一角色上，則只會顯示該角色的網路。		
+		//當游標上有物件，且該物件在網路中，則指印出該游標的網路圖。
+		if(hasObject() && nt.getNetworkCh().contains(objectOnMouse)){
+			
+			this.objectOnMouse.ntDisplay();
+			
+			}
+		//其他狀況則正常顯示網路圖。
+		else{
+			for(Character c : episode.get(theChosenOne)){				
+				c.ntDisplay();
+			}
 		}
+		
+		
 
 		
 		//畫出網路圖		
@@ -67,11 +80,12 @@ public class MainApplet extends PApplet{
 		//當滑鼠上有物件時，則選取的圓圈最後display
 		if(hasObject()){
 			for(Character c : episode.get(theChosenOne)){
-				if(!c.equals(this.objectOnMouse)){					
+				if(!c.equals(this.objectOnMouse)){		
 					c.display();
 				}
-				}
+				}					
 			this.objectOnMouse.display();
+			
 			}
 		else{
 			for(Character c : episode.get(theChosenOne)){				
@@ -81,6 +95,7 @@ public class MainApplet extends PApplet{
 		
 		}
 	
+	//初始化ControlP5按鈕
 	public void initButton(){
 		cp5 = new ControlP5(this);
 		cp5.addButton("addButton")
@@ -91,55 +106,64 @@ public class MainApplet extends PApplet{
 		cp5.addButton("clearButton")
 		.setLabel("clear All")
 		.setPosition(900,200)
-		.setSize(100,30);
-		
+		.setSize(100,30);		
 		
 	}
 	
+	//鍵盤按鍵事件。
 	public void keyPressed(KeyEvent e) {
+		//判斷按下的鍵盤紐。根據各個狀況設定顯示字以及選取的影集。並且清除網路中的角色
 	    int keyCode = e.getKeyCode();
 	    switch(keyCode) {
 	    	case 97:	
 	        case 49:	        	
 	        	series = "Star Wars 1";	        	
 	        	theChosenOne = 0;
+	        	nt.removeAll();
 	            break;
 	        case 98:
 	        case 50:	        	
 	        	series = "Star Wars 2";	        	
 	        	theChosenOne = 1;
+	        	nt.removeAll();
 	            break;
 	        case 99:
 	        case 51:	        	
 	        	series = "Star Wars 3";	        	
 	        	theChosenOne = 2;
+	        	nt.removeAll();
 	            break;
 	        case 100:
 	        case 52 :	        	
 	        	series = "Star Wars 4";	        	
 	        	theChosenOne = 3;
+	        	nt.removeAll();
 	        	break;
 	        case 101:
 	        case 53 :	        	
 	        	series = "Star Wars 5";	        	
 	        	theChosenOne = 4;
+	        	nt.removeAll();
 	        	break;
 	        case 102:
 	        case 54 :	        	
 	        	series = "Star Wars 6";
 	        	theChosenOne = 5;
+	        	nt.removeAll();
 	            break;
 	        case 103:
 	        case 55 :	        	
 	        	series = "Star Wars 7";	        	
 	        	theChosenOne = 6;
+	        	nt.removeAll();
 	            break;
 	        default :
 	        	break;
 	     }
-	    nt.removeAll();
+	    
    	} 
 	
+	//讀取資料
 	private void loadData(){	
 		
 		for(int j=0;j<7;j++){

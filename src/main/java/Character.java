@@ -66,6 +66,7 @@ public class Character {
 		parent.strokeWeight(4);
 		parent.ellipse(tmpX, tmpY, radius*2, radius*2);
 		
+		//取得游標與此角色的距離
 		distance = PApplet.dist(parent.mouseX, parent.mouseY, tmpX, tmpY);
 		//distance = Math.sqrt(Math.pow((parent.mouseX-x), 2) + Math.pow((parent.mouseY-y), 2));
 		//判斷游標是否在圓球內				
@@ -77,8 +78,9 @@ public class Character {
 			}
 			//判斷是否為指定的圓球，若相同則進行圓球設定的動畫。
 			if(parent.getObjectOnMouse().equals(this)){
+				//會進行縮小的動畫
 				ani.start();
-				//角色名字
+				//顯示角色名字
 				parent.fill(255,128,192);
 				parent.stroke(255,128,192);				
 				parent.rect(parent.mouseX,parent.mouseY-15 ,30 + 8*name.length(),30,7);
@@ -89,29 +91,47 @@ public class Character {
 		}
 							
 	}
-	//network display function
-	public void ntDisplay(){		
-		if(inNetwork){
-			Network ntTmp = parent.getNetwork();			
+	//network display function，畫出該角色的網路圖
+	public void ntDisplay(){	
+		//存取網路類別
+		if(inNetwork){			
+			Network ntTmp = parent.getNetwork();
 			
+			//取得網路中的角色群。
 			for(int i=0;i< ntTmp.getNetworkCh().size();i++){
 				Character c = ntTmp.getNetworkCh().get(i);
-				if(targets.containsKey(c)){					
-					parent.stroke(128,21,21);
+				//當此角色目標群中含有網路中的角色，則畫出曲線。
+				if(this.targets.containsKey(c)){				
+				
+					parent.stroke(128,21,21);								
 					parent.strokeWeight(4 + 2*(int)(Math.log(targets.get(c))));
 					parent.noFill();
 					parent.curve((2f* (this.tmpX -ntTmp.getX()) + this.tmpX), (2f * (this.tmpY - ntTmp.getY()) + this.tmpY)
 							,this.tmpX, this.tmpY
 							,c.tmpX, c.tmpY
 							,(2f*(c.tmpX - ntTmp.getX()) + c.tmpX), (2f*(c.tmpY - ntTmp.getY()) + c.tmpY)
-							);
-					/*
-					 * To see the bend point 
-					 * parent.strokeWeight(2);
-					 * parent.ellipse((2* (this.tmpX -ntTmp.getX()) + this.tmpX), (2f * (this.tmpY - ntTmp.getY()) + this.tmpY), 20, 20);
-					 * parent.ellipse((2*(c.tmpX - ntTmp.getX()) + c.tmpX), (2f*(c.tmpY - ntTmp.getY()) + c.tmpY), 20, 20);
-					*/
-					}					
+							);					
+					}			
+				else{
+					//當網路中角色的目標群含有此角色，則畫出曲線。
+					if(c.targets.containsKey(this)){
+						parent.stroke(128,21,21);
+						parent.strokeWeight(4 + 2*(int)(Math.log(c.targets.get(this))));
+						parent.noFill();
+						parent.curve((2f* (this.tmpX -ntTmp.getX()) + this.tmpX), (2f * (this.tmpY - ntTmp.getY()) + this.tmpY)
+								,this.tmpX, this.tmpY
+								,c.tmpX, c.tmpY
+								,(2f*(c.tmpX - ntTmp.getX()) + c.tmpX), (2f*(c.tmpY - ntTmp.getY()) + c.tmpY)
+								);					
+					}
+				}
+				
+				/*
+				 * To see the bend point 
+				 * parent.strokeWeight(2);
+				 * parent.ellipse((2* (this.tmpX -ntTmp.getX()) + this.tmpX), (2f * (this.tmpY - ntTmp.getY()) + this.tmpY), 20, 20);
+				 * parent.ellipse((2*(c.tmpX - ntTmp.getX()) + c.tmpX), (2f*(c.tmpY - ntTmp.getY()) + c.tmpY), 20, 20);
+				*/
 			}
 		}
 	}
@@ -138,11 +158,11 @@ public class Character {
 		Ani.to(this, (float)0.2, "tmpY", y,Ani.LINEAR);
 	}
 	
-	
+	//設定角色X座標方法
 	public void setX(float x){
 		this.tmpX = x;
 	}	
-		
+	//設定角色Y座標方法
 	public void setY(float y){
 		this.tmpY = y;
 	}
