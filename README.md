@@ -6,53 +6,53 @@
 
 ## Explanation of the Design  
 
-### 操作
-+ Add All按鈕可以將此影集的所有角色加入中間的network中
-+ Clear按鈕可以移除目前在network中的角色
-+ 當滑鼠游標移到角色圓圈上時，會顯示角色名字。
-+ 滑鼠可以隨意拖曳一個角色。當滑鼠放開地點在network圓圈內時，會將此角色加入network中。
-+ 按下鍵盤數字鍵(右方或上方都可以)1~7可以選擇影集。
+### �ާ@
++ Add All���s�i�H�N���v�����Ҧ�����[�J������network��
++ Clear���s�i�H�����ثe�bnetwork��������
++ ���ƹ���в��쨤����W�ɡA�|��ܨ���W�r�C
++ �ƹ��i�H�H�N�즲�@�Ө���C���ƹ���}�a�I�bnetwork��餺�ɡA�|�N������[�Jnetwork���C
++ ���U��L�Ʀr��(�k��ΤW�賣�i�H)1~7�i�H��ܼv���C
 
 
-### 視覺
-+ 游標移到角色圓圈內時，圓圈會放大。移開時會縮小。
-+ 當游標拖曳一角色，若可以放在網路內時(在大圓圈內)，則大圓會變色。
-+ 網路中，角色連線的寬度與互動次數有關。在實作中其寬度是設定為2*log(value) + 4
-+ 當游標移到網路中任何一角色上時，其他不相干角色的網路不會顯示。
+### ��ı
++ ��в��쨤���餺�ɡA���|��j�C���}�ɷ|�Y�p�C
++ ����Щ즲�@����A�Y�i�H��b��������(�b�j��餺)�A�h�j��|�ܦ�C
++ �������A����s�u���e�׻P���ʦ��Ʀ����C�b��@����e�׬O�]�w��2*log(value) + 4
++ ����в������������@����W�ɡA��L���ۤz���⪺�������|��ܡC
 
-##類別設計
+##���O�]�p
 
 ### MainApplet.java 
 
 + setup()
- 建立 Network instance 
- 使用 loadData() 讀取 JSON檔的資料
- 給定一個int參數"theChosenOne" 代表選取的影集數(0~6 分別代表 episode 1~7) (初始是0 代表eposode 1)
+ �إ� Network instance 
+ �ϥ� loadData() Ū�� JSON�ɪ����
+ ���w�@��int�Ѽ�"theChosenOne" �N��������v����(0~6 ���O�N�� episode 1~7) (��l�O0 �N��eposode 1)
 
-+ loadData()中
-建立一個ArrayList<ArrayList<Character>> "episode" 用來存放 7個 ArrayList<Character> (每一個ArrayList 放該影集的所有腳色)
-並且利用Character 的 method "addTarget(Character, int)" 建立一個HashMap<Character, int>用以存放每個角色會對應到的target以及他們之間的關聯性(value)
++ loadData()��
+�إߤ@��ArrayList<ArrayList<Character>> "episode" �ΨӦs�� 7�� ArrayList<Character> (�C�@��ArrayList ��Ӽv�����Ҧ��}��)
+�åB�Q��Character �� method "addTarget(Character, int)" �إߤ@��HashMap<Character, int>�ΥH�s��C�Ө���|�����쪺target�H�ΥL�̤��������p��(value)
 
 + draw()
-分別畫出network(中間網路部分)以及每個腳色
-當滑鼠上有物件時且該物件有在網路中，則僅顯示該物件的網路。否則正常顯示網路圖。
-當滑鼠上有物件時，則選取的圓圈最後display
+���O�e�Xnetwork(������������)�H�ΨC�Ӹ}��
+���ƹ��W������ɥB�Ӫ��󦳦b�������A�h����ܸӪ��󪺺����C�_�h���`��ܺ����ϡC
+���ƹ��W������ɡA�h��������̫�display
 
 + mouseDragged()
-當滑鼠拖曳時，判斷是否有物件。當有物件時，則設定該物件的X，Y座標。
+���ƹ��즲�ɡA�P�_�O�_������C��������ɡA�h�]�w�Ӫ���X�AY�y�СC
 
 + mouseReleased()
-當滑鼠鍵放開時，判斷是否有物件。當有物件時，判斷是否在network圓圈中。若不是在圓圈中，則使用Character中的fly()方法飛回原處。
+���ƹ����}�ɡA�P�_�O�_������C��������ɡA�P�_�O�_�bnetwork��餤�C�Y���O�b��餤�A�h�ϥ�Character����fly()��k���^��B�C
 
 + keyPressed()
-當按下數字鍵時會切換影集數
+�����U�Ʀr��ɷ|�����v����
 
 + initButton()
 + addButton()
 + clearButton()
-三者為設定ControlP5按鈕的方法。
-addButton()是 Add All按鈕按下時呼叫的方法。將所有的角色利用network中的add方法加入。
-clearButton()是Clear All按鈕按下時呼叫的方法。將所有的角色利用network中的removeAll方法移除。
+�T�̬��]�wControlP5���s����k�C
+addButton()�O Add All���s���U�ɩI�s����k�C�N�Ҧ�������Q��network����add��k�[�J�C
+clearButton()�OClear All���s���U�ɩI�s����k�C�N�Ҧ�������Q��network����removeAll��k�����C
 
 Setter
 + setHasObject(boolean)
@@ -65,28 +65,28 @@ Getter
 ### Character.java
 
 + display()
-畫出角色圓球
-當滑鼠游上的物件為該角色時，則顯示角色名字。
+�e�X�����y
+���ƹ���W�����󬰸Ө���ɡA�h��ܨ���W�r�C
 
 + ntDisplay()
-當角色在網路中時，畫出網路。(雙向，自己的目標，及網路中其他角色目標為自己)
-※曲線的實作：
-利用curve方法，並且設定控制點為該角色與圓點連線向大圓外延伸。
+������b�������ɡA�e�X�����C(���V�A�ۤv���ؼСA�κ�������L����ؼЬ��ۤv)
+�����u����@�G
+�Q��curve��k�A�åB�]�w�����I���Ө���P���I�s�u�V�j��~�����C
 
 + fly()
-設定MainApplet中的hasObject為false，objectOnMouse為null
-並且讓角色圓球由現在位置飛回原始位置。
+�]�wMainApplet����hasObject��false�AobjectOnMouse��null
+�åB�������y�Ѳ{�b��m���^��l��m�C
 
 + addTarget(Character, int)
-將目標角色加入目標ArrayList中
+�N�ؼШ���[�J�ؼ�ArrayList��
 
-Ani相關：
+Ani�����G
 + aniSetup()
-Ani初始化
+Ani��l��
 + start()
-開始方法。印出"in"。除錯用
+�}�l��k�C�L�X"in"�C������
 + end()
-呼叫時。設定MainApplet中的hasObject為false，objectOnMouse為null
+�I�s�ɡC�]�wMainApplet����hasObject��false�AobjectOnMouse��null
 
 Setter:
 + setX(float)
@@ -97,25 +97,25 @@ Getter:
 + getTargets(): HashMap<Character,Integer>
 
 ### Network.java
-ArrayList characters: 用來儲存在網路中的角色
+ArrayList characters: �Ψ��x�s�b������������
 
 + display()
-畫出大圓
-若游標上有物件且在大圓半徑內，則變換顏色
+�e�X�j��
+�Y��ФW������B�b�j��b�|���A�h�ܴ��C��
 
 + reArrange()
-根據此類別中ArrayList內角色的數量，來設定座標。
+�ھڦ����O��ArrayList�����⪺�ƶq�A�ӳ]�w�y�СC
 
 + add(Character)
-加入參數角色到characters中，並且呼叫reArrange()
+�[�J�Ѽƨ����characters���A�åB�I�sreArrange()
 
 + remove(Character)
-將characters中的參數角色移除。並且呼叫reArrange()
+�Ncharacters�����Ѽƨ��Ⲿ���C�åB�I�sreArrange()
 
 + removeAll()
-設定characters中每個角色的inNetwork屬性為false
-呼叫characters中每個角色的fly()
-並且移除characters中的所有角色，
+�]�wcharacters���C�Ө��⪺inNetwork�ݩʬ�false
+�I�scharacters���C�Ө��⪺fly()
+�åB����characters�����Ҧ�����A
 
 Getter:
 + getRadius(): int
@@ -123,15 +123,15 @@ Getter:
 + getY(): float
 + getNetworkCh(): ArrayList<Character>
 
-##實作中遇到的問題
-runtime執行時有遇到ConcurrentModificationException的問題。
-上網大致查詢一下，個人對這個錯誤誘發的理解是：
-iterator在讀取資料時會檢查資料的數量。
-如果其他thread有動到原始資料，改變其資料數量的話，iterator在進行下次讀取時會發現資料數量不一致，而丟出那個錯誤。
-而大部分網路上查到的狀況是在remove的時候會誘發錯誤。
-但我們一開始遇到這個問題是在讀取時產生的。
-最初的設計是只利用一個ArrayList去讀取JASON檔。讀取資料是在鍵盤紐按下後，開一個新的arrayList，將資料讀進來。這個設計下，在做快速的影集切換時，會誘發問題。
-後來利用7個ArrayList來存資料，有改善前面的問題。
-後續測試中，點擊Add All 並且切換影集時，又會誘發該錯誤。
-因此嘗試將character中ntDisplay讀取資料的方法(原本是利用enhanced loop)，修改為利用for(int i;i<characters.size();i++)方式來讀取。問題好像就沒了。
-不清楚這樣的解決方式對不對。目前為止測試是沒有問題的。
+##��@���J�쪺���D
+runtime����ɦ��J��ConcurrentModificationException�����D�C
+�W���j�P�d�ߤ@�U�A�ӤH��o�ӿ��~���o���z�ѬO�G
+iterator�bŪ����Ʈɷ|�ˬd��ƪ��ƶq�C
+�p�G��Lthread���ʨ��l��ơA���ܨ��Ƽƶq���ܡAiterator�b�i��U��Ū���ɷ|�o�{��Ƽƶq���@�P�A�ӥ�X���ӿ��~�C
+�Ӥj���������W�d�쪺���p�O�bremove���ɭԷ|���o���~�C
+���ڭ̤@�}�l�J��o�Ӱ��D�O�bŪ���ɲ��ͪ��C
+�̪쪺�]�p�O�u�Q�Τ@��ArrayList�hŪ��JASON�ɡCŪ����ƬO�b��L�ë��U��A�}�@�ӷs��arrayList�A�N���Ū�i�ӡC�o�ӳ]�p�U�A�b���ֳt���v�������ɡA�|���o���D�C
+��ӧQ��7��ArrayList�Ӧs��ơA���ﵽ�e�������D�C
+������դ��A�I��Add All �åB�����v���ɡA�S�|���o�ӿ��~�C
+�]�����ձNcharacter��ntDisplayŪ����ƪ���k(�쥻�O�Q��enhanced loop)�A�קאּ�Q��for(int i;i<characters.size();i++)�覡��Ū���A���D�N�ѨM�F�C
+���L�A���M���o�˪��ѨM�覡�藍��A�I�ܥثe������լO�S�����D���C
